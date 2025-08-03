@@ -1,13 +1,15 @@
 # grid/urls.py
+
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import DeviceViewSet
+from .views import DeviceViewSet, SensorDataViewSet, AlertViewSet
 
-# Create a router and register our ViewSets with it.
+# Create a router and register the ViewSets.
 router = DefaultRouter()
 router.register(r'devices', DeviceViewSet)
+router.register(r'sensordata', SensorDataViewSet)
+router.register(r'alerts', AlertViewSet)
 
-# The API URLs are now determined automatically by the router.
 urlpatterns = [
     path('', include(router.urls)),
 ]
