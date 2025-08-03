@@ -1,3 +1,8 @@
-from django.contrib import admin
+# grid/admin.py
 
-# Register your models here.
+from django.contrib import admin
+from .models import Device, SensorData, Alert
+
+admin.site.register(Device)
+admin.site.register(SensorData)
+admin.site.register(Alert)
