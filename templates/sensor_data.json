@@ -1,0 +1,7 @@
+[
+    {"timestamp": "2025-08-03T12:22:00Z", "current": 3.03, "temperature": 28.6, "vibration": 0.47, "voltage": 220},
+    {"timestamp": "2025-08-03T12:23:00Z", "current": 2.71, "temperature": 28.5, "vibration": 0.40, "voltage": 220},
+    {"timestamp": "2025-08-03T12:24:00Z", "current": 3.03, "temperature": 29.1, "vibration": 0.53, "voltage": 220},
+    {"timestamp": "2025-08-03T12:25:00Z", "current": 3.06, "temperature": 27.3, "vibration": 0.52, "voltage": 220},
+    {"timestamp": "2025-08-03T12:30:00Z", "current": 10.5, "temperature": 40.2, "vibration": 2.1, "voltage": 220}
+]
