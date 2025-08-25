@@ -35,12 +35,12 @@ function getPrediction(temperature) {
 
 // Function to render the chart using Chart.js
 function renderChart(data) {
-    const existingChart = Chart.getChart('temperatureChart');
+    const existingChart = Chart.getChart('status-chart');
     if (existingChart) {
         existingChart.destroy();
     }
     
-    const ctx = document.getElementById('temperatureChart').getContext('2d');
+    const ctx = document.getElementById('status-chart').getContext('2d');
     
     const timestamps = data.map(item => new Date(item.timestamp).toLocaleTimeString());
     const temperatures = data.map(item => item.temperature);
@@ -123,12 +123,26 @@ function displayAlerts(alerts) {
     const alertsList = document.getElementById('alerts-list');
     alertsList.innerHTML = '';
     
+    const alertCount = document.querySelector('.alert-count');
+    alertCount.textContent = alerts.length;
+
     if (alerts.length === 0) {
         alertsList.innerHTML = '<li class="no-alerts">No recent alerts.</li>';
     } else {
         alerts.forEach(alert => {
             const li = document.createElement('li');
-            li.textContent = `${new Date(alert.timestamp).toLocaleString()} - Device ${alert.device}: ${alert.message}`;
+            li.innerHTML = `
+                <i class="fas fa-exclamation-circle alert-icon"></i>
+                <div class="alert-content">
+                    <div>${alert.message}</div>
+                    <div class="alert-time">${new Date(alert.timestamp).toLocaleString()}</div>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            `;
+            if (alert.severity === 'warning') {
+                li.classList.add('warning');
+                li.querySelector('.alert-icon').classList.add('warning');
+            }
             alertsList.appendChild(li);
         });
     }
