@@ -10,132 +10,64 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="navbar-logo">
-            <i class="fas fa-bolt"></i>
-            <h3>Smart Grid Dashboard</h3>
-        </div>
-        <ul class="navbar-links">
-            <li><a href="#metrics">Metrics</a></li>
-            <li><a href="#status-alerts">Status & Alerts</a></li>
-            <li><a href="#charts">Charts</a></li>
-            <li><a href="#data-table">Sensor Data</a></li>
-        </ul>
-        <button id="theme-toggle" aria-label="Toggle dark and light mode">
-            <i class="fas fa-sun"></i>
-        </button>
-    </nav>
-    <div class="dashboard-container">
-        <header class="dashboard-header">
-            <div class="header-left">
-                <div class="header-info">
-                    <span>Last Updated: <span id="last-updated">N/A</span></span>
-                </div>
-            </div>
+    <div class="container">
+        <header>
+            <h1>Smart Grid Dashboard</h1>
         </header>
 
-        <main class="dashboard-main">
-            <a id="metrics"></a>
-            <section class="metrics-grid">
-                <div class="metric-card">
-                    <div class="metric-icon"><i class="fas fa-thermometer-half"></i></div>
-                    <div class="metric-content">
-                        <h4>Temperature</h4>
-                        <span id="latest-temp" class="metric-value">N/A</span>
-                    </div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon"><i class="fas fa-tachometer-alt"></i></div>
-                    <div class="metric-content">
-                        <h4>Voltage</h4>
-                        <span id="latest-voltage" class="metric-value">N/A</span>
-                    </div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon"><i class="fas fa-wave-square"></i></div>
-                    <div class="metric-content">
-                        <h4>Current</h4>
-                        <span id="latest-current" class="metric-value">N/A</span>
-                    </div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon"><i class="fas fa-cogs"></i></div>
-                    <div class="metric-content">
-                        <h4>Vibration</h4>
-                        <span id="latest-vibration" class="metric-value">N/A</span>
-                    </div>
-                </div>
-            </section>
-            <a id="status-alerts"></a>
-            <section class="status-alert-section">
-                <div class="status-card">
-                    <h3>Current Status</h3>
-                    <div id="prediction-status" class="status-indicator normal">Normal</div>
-                </div>
-                <div class="alerts-card">
-                    <h3>Recent Alerts</h3>
-                    <ul id="alerts-list">
-                        <li class="no-alerts">No recent alerts.</li>
-                    </ul>
-                </div>
-            </section>
-            <a id="charts"></a>
-            <section class="chart-section">
-                <h3>Temperature Trend</h3>
-                <canvas id="temperatureChart"></canvas>
-            </section>
-            <a id="data-table"></a>
-            <section class="data-table-section">
-                <h3>Sensor Readings</h3>
-                <div class="table-container">
-                    <table id="data-table">
-                        <thead>
-                            <tr>
-                                <th>Timestamp</th>
-                                <th>Device</th>
-                                <th>Current (A)</th>
-                                <th>Temperature (°C)</th>
-                                <th>Vibration (m/s²)</th>
-                                <th>Voltage (V)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="data-table-body">
-                            </tbody>
-                    </table>
-                </div>
-            </section>
-        </main>
+        <section class="metric-cards">
+            <div class="metric-card">
+                <h3>Temperature</h3>
+                <p id="latest-temp">N/A</p>
+            </div>
+            <div class="metric-card">
+                <h3>Voltage</h3>
+                <p id="latest-voltage">N/A</p>
+            </div>
+            <div class="metric-card">
+                <h3>Current</h3>
+                <p id="latest-current">N/A</p>
+            </div>
+            <div class="metric-card">
+                <h3>Vibration</h3>
+                <p id="latest-vibration">N/A</p>
+            </div>
+        </section>
+
+        <section class="status-indicator-container">
+            <h3>Prediction Status</h3>
+            <div id="prediction-status" class="status-indicator normal">Normal</div>
+        </section>
+
+        <section class="alerts-container">
+            <h3>Recent Alerts</h3>
+            <ul id="alerts-list">
+                <li class="no-alerts">No recent alerts.</li>
+            </ul>
+        </section>
+
+        <section class="data-table-container">
+            <h3>Sensor Readings</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Device</th>
+                        <th>Current (A)</th>
+                        <th>Temperature (°C)</th>
+                        <th>Vibration (m/s²)</th>
+                        <th>Voltage (V)</th>
+                    </tr>
+                </thead>
+                <tbody id="data-table-body">
+                </tbody>
+            </table>
+        </section>
+
+        <footer>
+            <span>Last Updated: <span id="last-updated">N/A</span></span>
+        </footer>
     </div>
     <script src="{% static 'pages/script.js' %}"></script>
-    <script>
-        const themeToggle = document.getElementById('theme-toggle');
-        const body = document.body;
-
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-theme');
-            const isDarkMode = body.classList.contains('dark-theme');
-            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-            updateThemeIcon(isDarkMode);
-        });
-
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            body.classList.add('dark-theme');
-            updateThemeIcon(true);
-        } else {
-            updateThemeIcon(false);
-        }
-
-        function updateThemeIcon(isDarkMode) {
-            const icon = themeToggle.querySelector('i');
-            if (isDarkMode) {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-            } else {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-            }
-        }
-    </script>
 </body>
 </html>
