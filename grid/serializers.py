@@ -10,12 +10,16 @@ class DeviceSerializer(serializers.ModelSerializer):
 
 # Serializer for the SensorData model
 class SensorDataSerializer(serializers.ModelSerializer):
+    device_name = serializers.CharField(source='device.name', read_only=True)
+
     class Meta:
         model = SensorData
-        fields = '__all__'
+        fields = ['id', 'device', 'device_name', 'current', 'temperature', 'vibration', 'voltage', 'timestamp']
 
 # Serializer for the Alert model
 class AlertSerializer(serializers.ModelSerializer):
+    device_name = serializers.CharField(source='device.name', read_only=True)
+
     class Meta:
         model = Alert
-        fields = '__all__'
+        fields = ['id', 'message', 'timestamp', 'alert_type', 'device', 'device_name']
