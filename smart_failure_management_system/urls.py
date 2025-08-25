@@ -15,10 +15,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 # smart_failure_management_system/urls.py
+# smart_failure_management_system/urls.py
 from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('grid.urls')),  # Include your app's URLs here
+    # This line routes requests for the API to your 'grid' app
+    path('api/', include('grid.urls')),
+    # This line routes requests for your dashboard to your 'pages' app
+    path('', include('pages.urls')),
 ]

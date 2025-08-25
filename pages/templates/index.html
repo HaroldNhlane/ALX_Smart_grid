@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Grid Dashboard</title>
+    <link rel="stylesheet" href="{% static 'pages/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Smart Grid Sensor Dashboard</h1>
+
+        <div class="metrics">
+            <div class="metric-card">
+                <h2>Current Prediction</h2>
+                <p id="prediction-status"></p>
+            </div>
+            <div class="metric-card">
+                <h2>Latest Temperature</h2>
+                <p id="latest-temp">-- °C</p>
+            </div>
+        </div>
+
+        <h2>Temperature Readings Over Time</h2>
+        <div class="chart-container">
+            <canvas id="temperatureChart"></canvas>
+        </div>
+
+        <h2>Raw Sensor Data</h2>
+        <div class="table-container">
+            <table id="data-table">
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Current</th>
+                        <th>Temperature</th>
+                        <th>Vibration</th>
+                        <th>Voltage</th>
+                    </tr>
+                </thead>
+                <tbody id="data-table-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="{% static 'pages/script.js' %}"></script>
+</body>
+</html>
